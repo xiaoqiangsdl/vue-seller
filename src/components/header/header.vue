@@ -133,6 +133,7 @@
           line-height: 12px
           font-size: 12px
         .support
+          line-height: 12px
           .icon
             display: inline-block
             vertical-align: top
