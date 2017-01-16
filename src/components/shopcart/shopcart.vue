@@ -53,7 +53,6 @@
     props: {
       selectFoods: {
         type: Array,
-        // 可能报错
         default() {
           return [];
         }

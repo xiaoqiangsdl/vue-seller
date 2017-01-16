@@ -12,11 +12,12 @@
         <a v-link="{path: '/seller'}">商家</a>
       </div>
     </div>
-    <router-view :seller="seller"></router-view>
+    <router-view :seller="seller" keep-alive></router-view>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
+  import {urlParse} from 'common/js/util';
   import header from './components/header/header';
 
   const ERR_OK = 0;
@@ -24,16 +25,23 @@
   export default {
     data() {
       return {
-        seller: {}
+        seller: {
+          id: (() => {
+            let queryParam = urlParse();
+            console.log(queryParam);
+            return queryParam.id;
+          })()
+        }
       };
     },
     created() {
-      this.$http.get('/api/seller').then((response) => {
+      this.$http.get('/api/seller?id=' + this.seller.id).then((response) => {
         response = response.body;
         if (response.errno === ERR_OK) {
           this.seller = response.data;
           // console.log(this.seller);
-        };
+        }
+        ;
       });
     },
     components: {
@@ -51,7 +59,7 @@
       width: 100%
       height: 40px
       line-height: 40px
-      border-1px(rgba(7,17,27,0.1))
+      border-1px(rgba(7, 17, 27, 0.1))
       .tab-item
         flex: 1
         text-align: center
@@ -60,6 +68,6 @@
           font-size: 14px;
           color: rgb(77, 85, 93)
           &.active
-            color: rgb(240, 20 ,20)
+            color: rgb(240, 20, 20)
 
 </style>
